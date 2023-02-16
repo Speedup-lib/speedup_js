@@ -1,3 +1,5 @@
+import { Class } from 'type-fest';
+
 export interface ApplicationErrorConstructorOptions<
   TCauseError extends Error = Error,
 > {
@@ -44,26 +46,26 @@ export class ApplicationError<TCause extends Error = Error> extends Error {
 
   /**
    * Configure sub error
-   * @param fn Constructor of the error
+   * @param cls Constructor/class of the error
    */
-  protected configureSubError(fn: Function) {
-    this.captureStackTrace(fn);
-    this.setPrototypeOf(fn);
+  protected configureSubError<T>(cls: Class<T>) {
+    this.captureStackTrace(cls);
+    this.setPrototypeOf(cls);
   }
 
   /**
    * Capture stack trace in the error
-   * @param fn Constructor of the error
+   * @param cls Constructor/class of the error
    */
-  private captureStackTrace(fn: Function) {
-    Error.captureStackTrace(this, fn);
+  private captureStackTrace<T>(cls: Class<T>) {
+    Error.captureStackTrace(this, cls);
   }
 
   /**
    * Set prototype of the object to enable instanceOf operator
-   * @param fn Constructor of the error
+   * @param cls Constructor/class of the error
    */
-  private setPrototypeOf(fn: Function) {
-    Object.setPrototypeOf(this, fn.prototype);
+  private setPrototypeOf<T>(cls: Class<T>) {
+    Object.setPrototypeOf(this, cls.prototype);
   }
 }

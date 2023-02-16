@@ -1,8 +1,8 @@
-export type Event<TEventType = string, TBody = any, TTimestamp = Date> = {
+export type Event<TType = string, TBody = any, TTimestamp = Date> = {
   /**
    * Event type
    */
-  event: TEventType;
+  type: TType;
 
   /**
    * When the event occurred
